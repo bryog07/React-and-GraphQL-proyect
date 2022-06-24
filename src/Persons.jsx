@@ -1,5 +1,13 @@
-import React, { useEffect, useState } from "react"
-import { gql, useLazyQuery } from "@apollo/client"
+import React, { useEffect, useState } from "react";
+import { gql, useLazyQuery } from "@apollo/client";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography, createTheme, ThemeProvider, responsiveFontSizes } from "@material-ui/core";
 
 const FIND_PERSON = gql`
 query findPersonByName($nameToSearch: String!){
@@ -14,7 +22,6 @@ query findPersonByName($nameToSearch: String!){
     }
   }
 `
-
 export const Persons = ({persons}) => {
     const [getPerson, result] = useLazyQuery(FIND_PERSON)
     const [person, setPerson] = useState(null)
@@ -27,27 +34,61 @@ export const Persons = ({persons}) => {
         if(result.data) {
             setPerson(result.data.findPerson)
         }
-    }, [result])
-
+    },[result])
     if(person){
-        return (
-            <div>
-                <h2>{person.name}</h2>
-                <div>{person.address.street}, {person.address.city}</div>
-                <div>{person.phone}</div>
-                <button onClick={() => setPerson(null)}>Close</button>
-            </div> 
-        )
+      let theme = createTheme();
+theme = responsiveFontSizes(theme);
+      return (
+      <div >
+        <Dialog open={Boolean(showPerson)} >
+          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} ><h1>{person.name}</h1></DialogTitle>
+          <DialogContent dividers>
+          <ThemeProvider theme={theme}>
+            <Typography variant="h5" gutterBottom>
+               {person.phone}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                {person.address.street}
+            </Typography >
+            <Typography variant="h5" gutterBottom >
+                {person.address.city}
+            </Typography>
+            </ThemeProvider>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color='primary' onClick={() => setPerson()}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+    </div> 
+    )
     }
     if (persons === null) return null
     return (
-        <div>
-            <h2>Persons</h2>
-            {persons.map(person=> 
-            <div key={person.id} onClick={() => {showPerson(person.name)}}>
-                {person.name} {person.phone}
-         </div>)}
-        </div>
-    )
+    <div style={{ padding: "1em 0em" }} >
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+       <TableHead>
+          <TableRow style={{backgroundColor:'#cfe8fc', color: 'red'}}>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Phone</TableCell>
+            <TableCell align="right">Street</TableCell>
+            <TableCell align="right">City</TableCell>
+            <TableCell align="right">Edit</TableCell>
+          </TableRow>
+       </TableHead>
+        <TableBody>
+          {persons.map((person) => (
+            <TableRow key={person.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
+              <TableCell align="right">{person.name}</TableCell>
+              <TableCell align="right">{person.phone}</TableCell>
+              <TableCell align="right">{person.address.street}</TableCell>
+              <TableCell align="right">{person.address.city}</TableCell>
+              <TableCell align="right"><Button variant="outlined" color='primary'onClick={() => {showPerson(person.name)}}>See Info</Button></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </div>
+  )
 }
-

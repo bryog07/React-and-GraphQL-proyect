@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import logo from './logo.svg'
 import './App.css' 
 import { Persons} from './Persons'
 import { PersonForm } from './PersonForm'
 import { usePersons } from  './persons/custom-hooks'
-import {Notify} from './Notify'
+import { Notify } from './Notify'
 import { PhoneForm } from './PhoneForm'
+import { Grid } from '@mui/material'
+
 
 function App() {
   const {data, loading, error} = usePersons()
@@ -19,18 +20,20 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Notify errorMessage={errorMessage} />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {loading 
-        ? <p>Loading...</p>
-        : <Persons persons={data?.allPersons} />
-        }
-      <PhoneForm notifyError={notifyError} />
+      <header className='App'> 
+      <Grid item xs={12} container style={{ background: "white"}} >
       <PersonForm notifyError={notifyError} />
-      </header>
-    </div>
+        <PhoneForm notifyError={notifyError} /> 
+      </Grid>
+      
+      
+      {loading 
+        ? <p>Loading...</p>
+        : <Grid item xs={0} style={{ background: "white"}}><Persons persons={data?.allPersons} /> </Grid> 
+        }
+       <Notify errorMessage={errorMessage} />
+ 
+       </header>
   )
 }
 
