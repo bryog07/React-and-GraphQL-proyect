@@ -21,15 +21,12 @@ function App() {
 
   return (
       <header className='App'> 
-      <Grid item xs={12} container style={{ background: "white"}} >
       <PersonForm notifyError={notifyError} />
-        <PhoneForm notifyError={notifyError} /> 
-      </Grid>
       
       
       {loading 
         ? <p>Loading...</p>
-        : <Grid item xs={0} style={{ background: "white"}}><Persons persons={data?.allPersons} /> </Grid> 
+        : <Persons persons={data?.allPersons} /> 
         }
        <Notify errorMessage={errorMessage} />
  

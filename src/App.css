@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #ffffff;
+  background-color: "default";
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,3 +26,5 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+
