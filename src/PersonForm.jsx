@@ -44,16 +44,14 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{ background: "#556cd6"}}>
           <Toolbar >
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          </Typography>
-          <Button variant="contained" color="primary" position="rigth" size='small' startIcon={<PersonAddAltIcon/>} onClick={handleOpen} >
+          <Button variant="contained" color="primary"  size='small' startIcon={<PersonAddAltIcon/>} onClick={handleOpen} >
             Add Person
           </Button>
           </Toolbar>
         </AppBar>
       </Box>
       <Dialog open={open} onClose={handleClose}>
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Create Person</DialogTitle>
+          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Edit Person</DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
             <Typography variant="h5" gutterBottom>
