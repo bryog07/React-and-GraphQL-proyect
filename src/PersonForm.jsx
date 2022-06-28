@@ -51,20 +51,20 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
         </AppBar>
       </Box>
       <Dialog open={open} onClose={handleClose}>
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Edit Person</DialogTitle>
+          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Create Person</DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
             <Typography variant="h5" gutterBottom>
             <Box m="auto"><TextField variant="outlined" margin='normal' size='small' placeholder='Name' helperText="Please enter your name" type="text" value={name} onChange={ evt => setName(evt.target.value)} /></Box>
             </Typography>
             <Typography variant="h5" gutterBottom>
-            <Box m="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Phone' value={phone} onChange={ evt => setPhone(evt.target.value)} /></Box>
+            <Box m="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Phone' helperText="Please enter your phone" value={phone} onChange={ evt => setPhone(evt.target.value)} /></Box>
             </Typography >
             <Typography variant="h5" gutterBottom >
-            <Box mx="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Street' value={street} onChange={ evt => setStreet(evt.target.value)} /></Box>
+            <Box mx="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Street' helperText="Please enter your street" value={street} onChange={ evt => setStreet(evt.target.value)} /></Box>
             </Typography>
             <Typography variant="h5" gutterBottom >
-            <Box mx="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='City' value={city} onChange={ evt => setCity(evt.target.value)} /></Box>
+            <Box mx="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='City' helperText="Please enter your city" value={city} onChange={ evt => setCity(evt.target.value)} /></Box>
             </Typography>
             </ThemeProvider>
           </DialogContent>

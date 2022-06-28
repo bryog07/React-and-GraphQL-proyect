@@ -10,6 +10,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
   export const PhoneForm = ({notifyError}) => {
     const [name, setName] = useState ('')
     const [phone, setPhone] = useState('')
+    const [street, setStreet] = useState('')
+    const [city, setCity] = useState('')
 
     const [changeNumber, result] = useMutation(EDIT_NUMBER)
 
@@ -23,10 +25,12 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
     const handleSubmit = e => {
         e.preventDefault()
 
-        changeNumber({variables: { name, phone}})
+        changeNumber({variables: { name, phone, street, city}})
 
         setName('')
         setPhone('')
+        setStreet('')
+        setCity('')
     }
     let theme = createTheme();
       theme = responsiveFontSizes(theme);
@@ -38,25 +42,31 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
     return(
         <div>
           <Button variant="contained" color="secondary" size='small' startIcon={<ModeEditIcon/>} onClick={handleOpen} >
-            Edit phone
+            Edit
           </Button>
-      <Dialog open={open} onClose={handleClose}>
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Create Person</DialogTitle>
+         <Dialog open={open} onClose={handleClose}>
+          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Edit Person</DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
             <Typography variant="h5" gutterBottom>
             <Box m="auto"><TextField variant="outlined" margin='normal' size='small' placeholder='Name' helperText="Please enter your name" type="text" value={name} onChange={ evt => setName(evt.target.value)} /></Box>
             </Typography>
             <Typography variant="h5" gutterBottom>
-            <Box m="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Phone' value={phone} onChange={ evt => setPhone(evt.target.value)} /></Box>
+            <Box m="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Phone' helperText="Please enter your phone" value={phone} onChange={ evt => setPhone(evt.target.value)} /></Box>
             </Typography >
+            <Typography variant="h5" gutterBottom>
+            <Box m="auto"><TextField id="outlined-basic" variant="outlined" margin='normal' size='small' placeholder='Street' helperText="Please enter your street" type="text" value={street} onChange={ evt => setStreet(evt.target.value)} /></Box>
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+            <Box m="auto"><TextField variant="outlined" margin='normal' size='small' placeholder='City' helperText="Please enter your city" type="text" value={city} onChange={ evt => setCity(evt.target.value)} /></Box>
+            </Typography>
             </ThemeProvider>
           </DialogContent>
           <DialogActions>
-            <Button variant="contained" color='primary' onClick={handleSubmit}>Add</Button>
+            <Button variant="contained" color='primary' onClick={handleSubmit}>save</Button>
             <Button variant="contained" color='primary' onClick={handleClose}>Cancel</Button>
           </DialogActions>
-        </Dialog>
+         </Dialog>
         </div>
     )
   }

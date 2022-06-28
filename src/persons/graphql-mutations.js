@@ -21,10 +21,14 @@ mutation createPerson($name: String!, $street: String!, $city: String! $phone: S
   `
 
   export const EDIT_NUMBER = gql`
-  mutation editNumber($name: String!, $phone: String!){
-    editNumber(name: $name, phone: $phone) {
+  mutation editNumber($name: String!, $phone: String!, $street: String!, $city: String!){
+    editNumber(name: $name, phone: $phone, street: $street, city: $city) {
       name
       phone 
+      address{
+      street
+      city
+    }
       id
     }
   }

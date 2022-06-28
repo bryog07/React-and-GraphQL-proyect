@@ -76,7 +76,7 @@ export const Persons = ({persons}) => {
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Street</TableCell>
             <TableCell align="right">City</TableCell>
-            <TableCell align="right">Edit</TableCell>
+            <TableCell align="right">Actions</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
        </TableHead>
