@@ -5,6 +5,14 @@ import { Button, createTheme, Dialog, DialogActions, DialogContent, responsiveFo
 import Box from '@material-ui/core/Box';
 import { DialogTitle } from '@material-ui/core';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  dialoTitle:{
+      background: "#cfe8fc",
+      textAlign: "center"
+  }
+})
 
 
   export const PhoneForm = ({notifyError}) => {
@@ -13,7 +21,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
 
-    const [changeNumber, result] = useMutation(EDIT_NUMBER)
+    const [changeData, result] = useMutation(EDIT_NUMBER)
 
     useEffect(() => {
         if(result.data && result.data.editNumber === null){
@@ -25,7 +33,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
     const handleSubmit = e => {
         e.preventDefault()
 
-        changeNumber({variables: { name, phone, street, city}})
+        changeData({variables: {name, phone, street, city}})
 
         setName('')
         setPhone('')
@@ -39,16 +47,19 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
     const handleOpen = () => {setOpen(true)};
     const handleClose = () => {setOpen(false)};
 
+    const classes = useStyles()
+
+
     return(
         <div>
           <Button variant="contained" color="secondary" size='small' startIcon={<ModeEditIcon/>} onClick={handleOpen} >
             Edit
           </Button>
          <Dialog open={open} onClose={handleClose}>
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Edit Person</DialogTitle>
+          <DialogTitle className= {classes.dialoTitle} component="h1" >Edit Person</DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
-            <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             <Box m="auto"><TextField variant="outlined" margin='normal' size='small' placeholder='Name' helperText="Please enter your name" type="text" value={name} onChange={ evt => setName(evt.target.value)} /></Box>
             </Typography>
             <Typography variant="h5" gutterBottom>

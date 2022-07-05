@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,10 +9,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography, createTheme, ThemeProvider, responsiveFontSizes } from "@material-ui/core";
 import { PhoneForm } from "./PhoneForm";
+import { makeStyles } from "@material-ui/core";
 
 const FIND_PERSON = gql`
-query findPersonByName($nameToSearch: String!){
-    findPerson(name: $nameToSearch) {
+query findPersonByName($idToSearch: String!){
+    findPerson(id: $idToSearch) {
       name
       phone
       id
@@ -23,12 +24,18 @@ query findPersonByName($nameToSearch: String!){
     }
   }
 `
+const useStyles = makeStyles({
+  dialoTitle:{
+    background:"#cfe8fc",
+    textAlign: "center"
+  }
+})
 export const Persons = ({persons}) => {
     const [getPerson, result] = useLazyQuery(FIND_PERSON)
     const [person, setPerson] = useState(null)
 
-    const showPerson = name => {
-        getPerson({variables: {nameToSearch: name}})
+    const showPerson = id => {
+        getPerson({variables: {idToSearch: id}})
     }
 
     useEffect(() => {
@@ -37,13 +44,20 @@ export const Persons = ({persons}) => {
         }
     
     },[result])
+    const classes = useStyles()
+    
     if(person){
       let theme = createTheme();
       theme = responsiveFontSizes(theme);
+
+      
       return (
       <div >
         <Dialog open={Boolean(showPerson)} >
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >{person.name}</DialogTitle>
+          <DialogTitle 
+          className={classes.dialoTitle}
+          component="h1" >{person.name}
+          </DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
             <Typography variant="h5" gutterBottom>
@@ -82,12 +96,12 @@ export const Persons = ({persons}) => {
        </TableHead>
         <TableBody>
           {persons.map((person) => (
-            <TableRow key={person.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
+            <TableRow key={person.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
               <TableCell align="right">{person.name}</TableCell>
               <TableCell align="right">{person.phone}</TableCell>
               <TableCell align="right">{person.address.street}</TableCell>
               <TableCell align="right">{person.address.city}</TableCell>
-              <TableCell align="right"><Button variant="outlined" color='primary'onClick={() => {showPerson(person.name)}}>See Info</Button></TableCell>
+              <TableCell align="right"><Button variant="outlined" color='primary'onClick={() => {showPerson(person.id)}}>See Info</Button></TableCell>
               <TableCell><PhoneForm/></TableCell>
             </TableRow>
           ))}

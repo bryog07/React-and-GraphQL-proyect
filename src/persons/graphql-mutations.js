@@ -2,7 +2,7 @@ import React from "react"
 import { gql } from "@apollo/client"
 
 export const CREATE_PERSON = gql` 
-mutation createPerson($name: String!, $street: String!, $city: String! $phone: String ){
+mutation createPerson($name: String!, $street: String!, $city: String!, $phone: String, ){
     addPerson(
       name: $name
       phone: $phone
@@ -21,8 +21,8 @@ mutation createPerson($name: String!, $street: String!, $city: String! $phone: S
   `
 
   export const EDIT_NUMBER = gql`
-  mutation editNumber($name: String!, $phone: String!, $street: String!, $city: String!){
-    editNumber(name: $name, phone: $phone, street: $street, city: $city) {
+  mutation editNumber($id: String!, $name: String, $phone: String!, $street: String!, $city: String!){
+    editNumber( id: $id, name: $name, phone: $phone, street: $street, city: $city) {
       name
       phone 
       address{

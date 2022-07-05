@@ -5,7 +5,18 @@ import { CREATE_PERSON } from './persons/graphql-mutations'
 import { Button, TextField, Container, Typography, Dialog, DialogTitle, DialogContent, ThemeProvider, createTheme, responsiveFontSizes, DialogActions, AppBar, Toolbar } from '@mui/material'
 import { Box } from '@mui/material'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { makeStyles } from '@material-ui/core'
 
+
+  const useStyles = makeStyles({
+    appBar:{
+      background:"#556cd6",
+    },
+    dialoTitle:{
+      background:"#cfe8fc",
+      textAlign:"center",
+    }
+  })
   export const PersonForm = ({notifyError}) => {
     const [name, setName] = useState ('')
     const [phone, setPhone] = useState('')
@@ -37,12 +48,14 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
         const [open, setOpen] = React.useState(false);
         const handleOpen = () => {setOpen(true)};
         const handleClose = () => {setOpen(false)};
+    
+    const classes = useStyles ()
       
        
     return(
       <div>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{ background: "#556cd6"}}>
+        <AppBar className={classes.appBar} position="static" >
           <Toolbar >
           <Button variant="contained" color="primary"  size='small' startIcon={<PersonAddAltIcon/>} onClick={handleOpen} >
             Add Person
@@ -51,7 +64,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
         </AppBar>
       </Box>
       <Dialog open={open} onClose={handleClose}>
-          <DialogTitle component="h1" style={{backgroundColor:'#cfe8fc', textAlign:"center",}} >Create Person</DialogTitle>
+          <DialogTitle className={classes.dialoTitle} component="h1"  >Create Person</DialogTitle>
           <DialogContent dividers>
           <ThemeProvider theme={theme}>
             <Typography variant="h5" gutterBottom>
